@@ -1,0 +1,15 @@
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\PCS.exe.config
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\PCS.exe
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\PCS.pdb
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\NationalInstruments.DAQmx.dll
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\NationalInstruments.Common.dll
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\NationalInstruments.DAQmx.xml
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\bin\Debug\NationalInstruments.Common.xml
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.csproj.AssemblyReference.cache
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.Form1.resources
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.Properties.Resources.resources
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.csproj.GenerateResource.cache
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.csproj.CoreCompileInputs.cache
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.csproj.Up2Date
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.exe
+C:\Users\kimer\OneDrive - USN\Kim\Master\Semester 8\Industrial IT\Assignment SCADA\Control-System-PID\PCS\obj\Debug\PCS.pdb

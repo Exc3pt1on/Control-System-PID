@@ -43,10 +43,10 @@
             this.txtDevice = new System.Windows.Forms.TextBox();
             this.txtChannelIn = new System.Windows.Forms.TextBox();
             this.tabPageControl = new System.Windows.Forms.TabPage();
+            this.lblManual = new System.Windows.Forms.Label();
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblUnit = new System.Windows.Forms.Label();
             this.chartTemp = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.lblManual = new System.Windows.Forms.Label();
             this.TabControl.SuspendLayout();
             this.tabPageDevice.SuspendLayout();
             this.tabPageControl.SuspendLayout();
@@ -55,9 +55,10 @@
             // 
             // txtTemp
             // 
-            this.txtTemp.Location = new System.Drawing.Point(605, 181);
+            this.txtTemp.Location = new System.Drawing.Point(454, 147);
+            this.txtTemp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtTemp.Name = "txtTemp";
-            this.txtTemp.Size = new System.Drawing.Size(48, 22);
+            this.txtTemp.Size = new System.Drawing.Size(37, 20);
             this.txtTemp.TabIndex = 0;
             // 
             // tmr1
@@ -68,9 +69,10 @@
             // 
             // txtHeat
             // 
-            this.txtHeat.Location = new System.Drawing.Point(164, 57);
+            this.txtHeat.Location = new System.Drawing.Point(160, 33);
+            this.txtHeat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtHeat.Name = "txtHeat";
-            this.txtHeat.Size = new System.Drawing.Size(44, 22);
+            this.txtHeat.Size = new System.Drawing.Size(34, 20);
             this.txtHeat.TabIndex = 1;
             this.txtHeat.Text = "0";
             // 
@@ -78,10 +80,11 @@
             // 
             this.TabControl.Controls.Add(this.tabPageDevice);
             this.TabControl.Controls.Add(this.tabPageControl);
-            this.TabControl.Location = new System.Drawing.Point(78, 67);
+            this.TabControl.Location = new System.Drawing.Point(58, 54);
+            this.TabControl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(368, 460);
+            this.TabControl.Size = new System.Drawing.Size(276, 374);
             this.TabControl.TabIndex = 3;
             // 
             // tabPageDevice
@@ -92,10 +95,11 @@
             this.tabPageDevice.Controls.Add(this.lblDevice);
             this.tabPageDevice.Controls.Add(this.txtDevice);
             this.tabPageDevice.Controls.Add(this.txtChannelIn);
-            this.tabPageDevice.Location = new System.Drawing.Point(4, 25);
+            this.tabPageDevice.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDevice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPageDevice.Name = "tabPageDevice";
-            this.tabPageDevice.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDevice.Size = new System.Drawing.Size(360, 431);
+            this.tabPageDevice.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageDevice.Size = new System.Drawing.Size(268, 348);
             this.tabPageDevice.TabIndex = 0;
             this.tabPageDevice.Text = "Device";
             this.tabPageDevice.UseVisualStyleBackColor = true;
@@ -103,51 +107,57 @@
             // lblChannelOut
             // 
             this.lblChannelOut.AutoSize = true;
-            this.lblChannelOut.Location = new System.Drawing.Point(56, 85);
+            this.lblChannelOut.Location = new System.Drawing.Point(42, 69);
+            this.lblChannelOut.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblChannelOut.Name = "lblChannelOut";
-            this.lblChannelOut.Size = new System.Drawing.Size(80, 16);
+            this.lblChannelOut.Size = new System.Drawing.Size(67, 13);
             this.lblChannelOut.TabIndex = 27;
             this.lblChannelOut.Text = "Channel out:";
             // 
             // txtChannelOut
             // 
-            this.txtChannelOut.Location = new System.Drawing.Point(142, 85);
+            this.txtChannelOut.Location = new System.Drawing.Point(106, 69);
+            this.txtChannelOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtChannelOut.Name = "txtChannelOut";
-            this.txtChannelOut.Size = new System.Drawing.Size(100, 22);
+            this.txtChannelOut.Size = new System.Drawing.Size(76, 20);
             this.txtChannelOut.TabIndex = 26;
             this.txtChannelOut.Text = "ao0";
             // 
             // lblChannelIn
             // 
             this.lblChannelIn.AutoSize = true;
-            this.lblChannelIn.Location = new System.Drawing.Point(64, 57);
+            this.lblChannelIn.Location = new System.Drawing.Point(48, 46);
+            this.lblChannelIn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblChannelIn.Name = "lblChannelIn";
-            this.lblChannelIn.Size = new System.Drawing.Size(72, 16);
+            this.lblChannelIn.Size = new System.Drawing.Size(60, 13);
             this.lblChannelIn.TabIndex = 25;
             this.lblChannelIn.Text = "Channel in:";
             // 
             // lblDevice
             // 
             this.lblDevice.AutoSize = true;
-            this.lblDevice.Location = new System.Drawing.Point(83, 32);
+            this.lblDevice.Location = new System.Drawing.Point(62, 26);
+            this.lblDevice.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDevice.Name = "lblDevice";
-            this.lblDevice.Size = new System.Drawing.Size(53, 16);
+            this.lblDevice.Size = new System.Drawing.Size(44, 13);
             this.lblDevice.TabIndex = 24;
             this.lblDevice.Text = "Device:";
             // 
             // txtDevice
             // 
-            this.txtDevice.Location = new System.Drawing.Point(142, 29);
+            this.txtDevice.Location = new System.Drawing.Point(106, 24);
+            this.txtDevice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtDevice.Name = "txtDevice";
-            this.txtDevice.Size = new System.Drawing.Size(100, 22);
+            this.txtDevice.Size = new System.Drawing.Size(76, 20);
             this.txtDevice.TabIndex = 4;
             this.txtDevice.Text = "dev3";
             // 
             // txtChannelIn
             // 
-            this.txtChannelIn.Location = new System.Drawing.Point(142, 57);
+            this.txtChannelIn.Location = new System.Drawing.Point(106, 46);
+            this.txtChannelIn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtChannelIn.Name = "txtChannelIn";
-            this.txtChannelIn.Size = new System.Drawing.Size(100, 22);
+            this.txtChannelIn.Size = new System.Drawing.Size(76, 20);
             this.txtChannelIn.TabIndex = 3;
             this.txtChannelIn.Text = "ai0";
             // 
@@ -155,29 +165,42 @@
             // 
             this.tabPageControl.Controls.Add(this.lblManual);
             this.tabPageControl.Controls.Add(this.txtHeat);
-            this.tabPageControl.Location = new System.Drawing.Point(4, 25);
+            this.tabPageControl.Location = new System.Drawing.Point(4, 22);
+            this.tabPageControl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPageControl.Name = "tabPageControl";
-            this.tabPageControl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageControl.Size = new System.Drawing.Size(360, 431);
+            this.tabPageControl.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPageControl.Size = new System.Drawing.Size(268, 348);
             this.tabPageControl.TabIndex = 1;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
             // 
+            // lblManual
+            // 
+            this.lblManual.AutoSize = true;
+            this.lblManual.Location = new System.Drawing.Point(18, 36);
+            this.lblManual.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblManual.Name = "lblManual";
+            this.lblManual.Size = new System.Drawing.Size(138, 13);
+            this.lblManual.TabIndex = 24;
+            this.lblManual.Text = "Manual heater signal (0-5v):";
+            // 
             // lblTemp
             // 
             this.lblTemp.AutoSize = true;
-            this.lblTemp.Location = new System.Drawing.Point(514, 184);
+            this.lblTemp.Location = new System.Drawing.Point(386, 150);
+            this.lblTemp.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTemp.Name = "lblTemp";
-            this.lblTemp.Size = new System.Drawing.Size(85, 16);
+            this.lblTemp.Size = new System.Drawing.Size(67, 13);
             this.lblTemp.TabIndex = 4;
             this.lblTemp.Text = "Temperature";
             // 
             // lblUnit
             // 
             this.lblUnit.AutoSize = true;
-            this.lblUnit.Location = new System.Drawing.Point(659, 184);
+            this.lblUnit.Location = new System.Drawing.Point(494, 150);
+            this.lblUnit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblUnit.Name = "lblUnit";
-            this.lblUnit.Size = new System.Drawing.Size(20, 16);
+            this.lblUnit.Size = new System.Drawing.Size(18, 13);
             this.lblUnit.TabIndex = 5;
             this.lblUnit.Text = "°C";
             // 
@@ -185,34 +208,27 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.chartTemp.ChartAreas.Add(chartArea1);
-            this.chartTemp.Location = new System.Drawing.Point(700, 92);
+            this.chartTemp.Location = new System.Drawing.Point(525, 75);
+            this.chartTemp.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chartTemp.Name = "chartTemp";
             series1.ChartArea = "ChartArea1";
             series1.Name = "Series1";
             this.chartTemp.Series.Add(series1);
-            this.chartTemp.Size = new System.Drawing.Size(615, 365);
+            this.chartTemp.Size = new System.Drawing.Size(461, 297);
             this.chartTemp.TabIndex = 23;
             this.chartTemp.Text = "chart1";
             // 
-            // lblManual
-            // 
-            this.lblManual.AutoSize = true;
-            this.lblManual.Location = new System.Drawing.Point(75, 60);
-            this.lblManual.Name = "lblManual";
-            this.lblManual.Size = new System.Drawing.Size(83, 16);
-            this.lblManual.TabIndex = 24;
-            this.lblManual.Text = "Manual gain:";
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1336, 677);
+            this.ClientSize = new System.Drawing.Size(1002, 550);
             this.Controls.Add(this.chartTemp);
             this.Controls.Add(this.lblUnit);
             this.Controls.Add(this.lblTemp);
             this.Controls.Add(this.TabControl);
             this.Controls.Add(this.txtTemp);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.TabControl.ResumeLayout(false);

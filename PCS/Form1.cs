@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using NationalInstruments.DAQmx;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Opc.UaFx;
+using Opc.UaFx.Server;
+using System.Threading;
+using Opc.UaFx.Client;
+using Opc.Ua;
+using System.Drawing;
 
 namespace PCS
 {
@@ -19,9 +19,78 @@ namespace PCS
         private List<double> FilteredValue = new List<double>();
         private List<DateTime> Timestamp = new List<DateTime>();
         private double Heat;
+        OpcDataVariableNode temperatureNode = new OpcDataVariableNode<double>("Temperature", 100.0);
+        private static OpcServer server;
+        private bool Connected = false;
+        private bool Running = false;
         public Form1()
         {
             InitializeComponent();
+            Thread serverThread = new Thread(StartOpcUaServer);
+            serverThread.Start();
+        }
+        private void StartOpcUaServer()
+        {
+            // Start OPC UA Server
+            //  Method copy from DAQ and OPC Systems Assignment
+
+            try
+            {
+                server = new OpcServer("opc.tcp://localhost:4840/", temperatureNode); //"opc.tcp://10.35.44.45:4840/"
+                server.Start();
+                temperatureNode.Value = 100;
+                temperatureNode.ApplyChanges(server.SystemContext);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void UploadToOPC(double value)
+        {
+            try
+            {
+                // Check if the server is initialized
+                if (server != null)
+                {
+                    // Check if the node is found
+                    if (temperatureNode != null)
+                    {
+                        // Set the new value
+                        temperatureNode.Value = value;
+                        temperatureNode.ApplyChanges(server.SystemContext);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Temperature node not found in the OPC UA server.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("OPC UA server is not initialized.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error uploading value to OPC UA server: {ex.Message}");
+            }
+        }
+
+        private bool CheckConnectionDAQ(string sensor, string channel)
+        {
+            try
+            {
+                // Attempt to read a value from the DAQmx sensor
+                ReadDAQ(sensor, channel);
+                return true;
+            }
+            catch (Exception)
+            {
+                // If an exception is thrown, the device is not connected
+                return false;
+            }
         }
         private double ReadDAQ(string sensor, string channel)
         {
@@ -108,6 +177,8 @@ namespace PCS
             }
         }
 
+
+
         private void tmr1_Tick(object sender, EventArgs e)
         {
             double signal, temp, filtered;
@@ -126,19 +197,70 @@ namespace PCS
             }
             ///
 
-            device = txtDevice.Text;
-            channel = txtChannelIn.Text;
-            signal = ReadDAQ(device, channel);
-            temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
+            //get temperature from sensor or manually written in txtTemp
+            if (Connected)
+            {
+                device = txtDevice.Text;
+                channel = txtChannelIn.Text;
+                signal = ReadDAQ(device, channel);
+                temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
+                WriteDAQ("dev3", "ao0", Heat);
+            }
+            else
+            {
+                if (double.TryParse(txtTemp.Text, out double value))
+                {
+                    temp = value;
+                }
+                else
+                {
+                    temp = 0;
+                }
+            }
+
+
             SensorValue.Add(temp);
             Timestamp.Add(datetime);
-            FilteredValue.Add(temp);
-
             filtered = MovingAverage(SensorValue);
+            FilteredValue.Add(filtered);
+
+            UploadToOPC(filtered);
             txtTemp.Text = filtered.ToString();
-            WriteDAQ("dev3", "ao0", Heat);
             InsertIntoChart();
 
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            string sensor, channel;
+            sensor = txtDevice.Text;
+            channel = txtChannelIn.Text;
+            if (CheckConnectionDAQ(sensor, channel))
+            {
+                Connected = true;
+                lblConnect.Text = "Connected";
+                lblConnect.ForeColor = Color.Green;
+                btnConnect.Text = "Disconnect";
+            }
+            else
+            {
+                Connected = false;
+                lblConnect.Text = "Not Connected";
+                lblConnect.ForeColor = Color.Red;
+                btnConnect.Text = "Connect";
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            if (Running)
+            {
+                tmr1.Stop();
+            }
+            else
+            {
+                tmr1.Start();
+            }
         }
     }
 }

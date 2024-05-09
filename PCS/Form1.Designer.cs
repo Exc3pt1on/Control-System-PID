@@ -45,11 +45,12 @@
             this.txtDevice = new System.Windows.Forms.TextBox();
             this.txtChannelIn = new System.Windows.Forms.TextBox();
             this.tabPageControl = new System.Windows.Forms.TabPage();
+            this.btnStart = new System.Windows.Forms.Button();
             this.lblManual = new System.Windows.Forms.Label();
             this.lblTemp = new System.Windows.Forms.Label();
             this.lblUnit = new System.Windows.Forms.Label();
             this.chartTemp = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnStart = new System.Windows.Forms.Button();
+            this.btnSim = new System.Windows.Forms.Button();
             this.TabControl.SuspendLayout();
             this.tabPageDevice.SuspendLayout();
             this.tabPageControl.SuspendLayout();
@@ -185,6 +186,7 @@
             // 
             // tabPageControl
             // 
+            this.tabPageControl.Controls.Add(this.btnSim);
             this.tabPageControl.Controls.Add(this.btnStart);
             this.tabPageControl.Controls.Add(this.lblManual);
             this.tabPageControl.Controls.Add(this.txtHeat);
@@ -196,6 +198,16 @@
             this.tabPageControl.TabIndex = 1;
             this.tabPageControl.Text = "Control";
             this.tabPageControl.UseVisualStyleBackColor = true;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Location = new System.Drawing.Point(214, 106);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.TabIndex = 25;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // lblManual
             // 
@@ -238,15 +250,15 @@
             this.chartTemp.TabIndex = 23;
             this.chartTemp.Text = "chart1";
             // 
-            // btnStart
+            // btnSim
             // 
-            this.btnStart.Location = new System.Drawing.Point(214, 106);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 25;
-            this.btnStart.Text = "Start";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.btnSim.Location = new System.Drawing.Point(198, 148);
+            this.btnSim.Name = "btnSim";
+            this.btnSim.Size = new System.Drawing.Size(107, 23);
+            this.btnSim.TabIndex = 26;
+            this.btnSim.Text = "Simulate input";
+            this.btnSim.UseVisualStyleBackColor = true;
+            this.btnSim.Click += new System.EventHandler(this.btnSim_Click);
             // 
             // Form1
             // 
@@ -294,6 +306,7 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Label lblConnect;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Button btnSim;
     }
 }
 

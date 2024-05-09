@@ -18,11 +18,14 @@ namespace PCS
         private List<double> SensorValue = new List<double>();
         private List<double> FilteredValue = new List<double>();
         private List<DateTime> Timestamp = new List<DateTime>();
-        private double Heat;
+        private double Heat = 0;
         OpcDataVariableNode temperatureNode = new OpcDataVariableNode<double>("Temperature", 100.0);
+        OpcDataVariableNode HeatNode = new OpcDataVariableNode<double>("Heat", 0.0);
+        OpcDataVariableNode FanNode = new OpcDataVariableNode<double>("Fan", 0.0);
         private static OpcServer server;
         private bool Connected = false;
         private bool Running = false;
+        private bool Simulating = false;
         public Form1()
         {
             InitializeComponent();
@@ -36,9 +39,9 @@ namespace PCS
 
             try
             {
-                server = new OpcServer("opc.tcp://localhost:4840/", temperatureNode); //"opc.tcp://10.35.44.45:4840/"
+                server = new OpcServer("opc.tcp://localhost:4840/", temperatureNode, HeatNode, FanNode); //"opc.tcp://10.35.44.45:4840/"
                 server.Start();
-                temperatureNode.Value = 100;
+                temperatureNode.Value = 101;
                 temperatureNode.ApplyChanges(server.SystemContext);
             }
             catch (Exception)
@@ -47,7 +50,7 @@ namespace PCS
             }
         }
 
-        private void UploadToOPC(double value)
+        private void UploadToOPC(double value, OpcDataVariableNode node)
         {
             try
             {
@@ -55,16 +58,16 @@ namespace PCS
                 if (server != null)
                 {
                     // Check if the node is found
-                    if (temperatureNode != null)
+                    if (node != null)
                     {
                         // Set the new value
-                        temperatureNode.Value = value;
-                        temperatureNode.ApplyChanges(server.SystemContext);
+                        node.Value = value;
+                        node.ApplyChanges(server.SystemContext);
 
                     }
                     else
                     {
-                        MessageBox.Show("Temperature node not found in the OPC UA server.");
+                        MessageBox.Show("Node not found in the OPC UA server.");
                     }
                 }
                 else
@@ -177,24 +180,63 @@ namespace PCS
             }
         }
 
-
+        private void simulate(int id)
+        {
+            switch (id)
+            {
+                case 1: //pwm 50% 2sec
+                    while (Simulating)
+                    {
+                        if (Heat == 0)
+                        {
+                            Heat = 5;
+                        }
+                        else
+                        {
+                            Heat = 0;
+                        }
+                        Thread.Sleep(2000);
+                    }
+                    break;
+                case 2:
+                    Random rnd = new Random();
+                    double heatChange;
+                    Heat = 2.5;
+                    while (Simulating)
+                    {
+                        heatChange = (rnd.NextDouble() * 2) - 1;
+                        Heat += heatChange;
+                        Heat = Math.Min(Heat, 5);
+                        Heat = Math.Max(Heat, 0);
+                        Thread.Sleep(500);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
 
         private void tmr1_Tick(object sender, EventArgs e)
         {
             double signal, temp, filtered;
+            double fan = 0;
             string channel, device;
             DateTime datetime = DateTime.Now;
 
 
             ///
-            if (double.TryParse(txtHeat.Text, out double val))
+            if (Simulating == false)
             {
-                Heat = val;
+                if (double.TryParse(txtHeat.Text, out double val))
+                {
+                    Heat = val;
+                }
+                else
+                {
+                    Heat = 0;
+                }
             }
-            else
-            {
-                Heat = 0;
-            }
+
             ///
 
             //get temperature from sensor or manually written in txtTemp
@@ -202,6 +244,7 @@ namespace PCS
             {
                 device = txtDevice.Text;
                 channel = txtChannelIn.Text;
+                fan = ReadDAQ(device, "ai1");
                 signal = ReadDAQ(device, channel);
                 temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
                 WriteDAQ("dev3", "ao0", Heat);
@@ -224,7 +267,9 @@ namespace PCS
             filtered = MovingAverage(SensorValue);
             FilteredValue.Add(filtered);
 
-            UploadToOPC(filtered);
+            UploadToOPC(filtered, temperatureNode);
+            UploadToOPC(fan, FanNode);
+            UploadToOPC(Heat, HeatNode);
             txtTemp.Text = filtered.ToString();
             InsertIntoChart();
 
@@ -261,6 +306,23 @@ namespace PCS
             {
                 tmr1.Start();
             }
+        }
+
+        private void btnSim_Click(object sender, EventArgs e)
+        {
+            //Simulation id
+            int id = 2;
+            if (Simulating)
+            {
+                Simulating = false;
+            }
+            else
+            {
+                Simulating = true;
+                Thread sim = new Thread(() => simulate(id));
+                sim.Start();
+            }
+
         }
     }
 }

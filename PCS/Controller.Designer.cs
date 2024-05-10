@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.txtTempReal = new System.Windows.Forms.TextBox();
             this.tmr1 = new System.Windows.Forms.Timer(this.components);
             this.txtHeat = new System.Windows.Forms.TextBox();
@@ -74,7 +74,7 @@
             // 
             // tmr1
             // 
-            this.tmr1.Interval = 500;
+            this.tmr1.Interval = 10;
             this.tmr1.Tick += new System.EventHandler(this.tmr1_Tick);
             // 
             // txtHeat
@@ -265,28 +265,28 @@
             // 
             // chartTempReal
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartTempReal.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.chartTempReal.ChartAreas.Add(chartArea5);
             this.chartTempReal.Location = new System.Drawing.Point(576, 39);
             this.chartTempReal.Margin = new System.Windows.Forms.Padding(2);
             this.chartTempReal.Name = "chartTempReal";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartTempReal.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.chartTempReal.Series.Add(series5);
             this.chartTempReal.Size = new System.Drawing.Size(670, 297);
             this.chartTempReal.TabIndex = 23;
             this.chartTempReal.Text = "chart1";
             // 
             // chartTempSim
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTempSim.ChartAreas.Add(chartArea2);
+            chartArea6.Name = "ChartArea1";
+            this.chartTempSim.ChartAreas.Add(chartArea6);
             this.chartTempSim.Location = new System.Drawing.Point(576, 362);
             this.chartTempSim.Margin = new System.Windows.Forms.Padding(2);
             this.chartTempSim.Name = "chartTempSim";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.chartTempSim.Series.Add(series2);
+            series6.ChartArea = "ChartArea1";
+            series6.Name = "Series1";
+            this.chartTempSim.Series.Add(series6);
             this.chartTempSim.Size = new System.Drawing.Size(670, 297);
             this.chartTempSim.TabIndex = 24;
             this.chartTempSim.Text = "chart1";

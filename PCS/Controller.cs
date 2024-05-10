@@ -20,6 +20,7 @@ namespace PCS
         private List<DateTime> Timestamp = new List<DateTime>();
         private double Heat = 0;
         OpcHandler opcHandler = new OpcHandler();
+        Simulation Sim;
         private bool Connected = false;
         private bool Running = false;
         private bool Simulating = false;
@@ -31,6 +32,26 @@ namespace PCS
             opcHandler.AddNode("Fan");
             Thread serverThread = new Thread(opcHandler.StartOpcUaServer);
             serverThread.Start();
+
+
+            //funger ikke (white noice)
+            //double a = 0.999;
+            //double[] b = { 0.0056, -0.0117 };
+            //double c = -0.4473;
+            //double initialState = -71;
+
+            //double a = 0.9488;
+            //double[] b = { 0.6182, -0.0433 };
+            //double c = 0.4894;
+            //double initialState = 52.9864;
+
+            double a = 0.9488;
+            double[] b = { 0.24, -0.0433 };
+            double c = 0.4894;
+            double initialState = 52.9864;
+
+
+            Sim = new Simulation(a, b, c, initialState);
         }
 
         private bool CheckConnectionDAQ(string sensor, string channel)
@@ -203,14 +224,16 @@ namespace PCS
             }
             else
             {
-                if (double.TryParse(txtTempReal.Text, out double value))
-                {
-                    temp = value;
-                }
-                else
-                {
-                    temp = 0;
-                }
+                double[] inputs = { Heat, 5 };
+                temp = Sim.UpdateSimulation(inputs, 1);
+                //if (double.TryParse(txtTempReal.Text, out double value))
+                //{
+                //    temp = value;
+                //}
+                //else
+                //{
+                //    temp = 0;
+                //}
             }
 
 
@@ -264,20 +287,22 @@ namespace PCS
         private void btnSim_Click(object sender, EventArgs e)
         {
             //Simulation id
-            int id = 2;
-            if (Simulating)
-            {
-                Simulating = false;
-            }
-            else
-            {
-                Simulating = true;
-                Thread sim = new Thread(() => simulate(id));
-                sim.Start();
-            }
-
+            //int id = 2;
+            //if (Simulating)
+            //{
+            //    Simulating = false;
+            //}
+            //else
+            //{
+            //    Simulating = true;
+            //    Thread sim = new Thread(() => simulate(id));
+            //    sim.Start();
+            //}
+            double heat = Convert.ToDouble(txtHeat.Text);
+            double[] inputs = { 0, 1 };
+            double output;
+            output = Sim.UpdateSimulation(inputs, 1);
+            MessageBox.Show(output.ToString());
         }
-
-
     }
 }

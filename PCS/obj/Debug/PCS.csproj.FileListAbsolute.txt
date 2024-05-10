@@ -177,3 +177,5 @@ C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\ob
 C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\obj\Debug\PCS.csproj.CopyComplete
 C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\obj\Debug\PCS.exe
 C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\obj\Debug\PCS.pdb
+C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\bin\Debug\MathNet.Numerics.dll
+C:\Users\kimer\OneDrive - USN\Kim\Semester 8\IIT\SCADA\Control-System-PID\PCS\bin\Debug\MathNet.Numerics.xml

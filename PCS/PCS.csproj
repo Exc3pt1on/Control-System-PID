@@ -305,6 +305,7 @@
       <DependentUpon>Controller.cs</DependentUpon>
     </Compile>
     <Compile Include="OpcHandler.cs" />
+    <Compile Include="PID.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simulation.cs" />

@@ -15,15 +15,32 @@ namespace PCS
 {
     public partial class Controller : Form
     {
+        /*
+         Notes
+        Ultimate gain simulation = 4,95
+        Tu = 18
+        PID: 
+        Kp = 0.6*Ku = 2,97
+        Ti = 0.5*Tu = 9
+        Td = 0.125*Tu = 2,25
+
+
+         */
         private List<double> SensorValue = new List<double>();
         private List<double> FilteredValue = new List<double>();
+        private List<double> SimValue = new List<double>();
+        private List<double> FilteredSim = new List<double>();
         private List<DateTime> Timestamp = new List<DateTime>();
+        private List<DateTime> TimestampSim = new List<DateTime>();
         private double Heat = 0;
+        private double Setpoint = 0;
+        PID PidController = new PID();
         OpcHandler opcHandler = new OpcHandler();
         Simulation Sim;
         private bool Connected = false;
         private bool Running = false;
         private bool Simulating = false;
+        private bool Manual = false;
         public Controller()
         {
             InitializeComponent();
@@ -33,24 +50,12 @@ namespace PCS
             Thread serverThread = new Thread(opcHandler.StartOpcUaServer);
             serverThread.Start();
 
-
-            //funger ikke (white noice)
-            //double a = 0.999;
-            //double[] b = { 0.0056, -0.0117 };
-            //double c = -0.4473;
-            //double initialState = -71;
-
-            //double a = 0.9488;
-            //double[] b = { 0.6182, -0.0433 };
-            //double c = 0.4894;
-            //double initialState = 52.9864;
-
             double a = 0.9488;
             double[] b = { 0.24, -0.0433 };
             double c = 0.4894;
             double initialState = 52.9864;
 
-
+            Setpoint = Convert.ToDouble(txtSetpoint.Text);
             Sim = new Simulation(a, b, c, initialState);
         }
 
@@ -129,22 +134,47 @@ namespace PCS
             // Method for inserting sensor values into chart
             try
             {
-                chartTempReal.Titles.Clear();
-                chartTempReal.Series.Clear();
-                Series series = new Series();
-                series.ChartType = SeriesChartType.Line;
-                series.XValueType = ChartValueType.DateTime;
-
-                for (int i = 0; i < FilteredValue.Count; i++)
+                if (Connected)
                 {
-                    series.Points.AddXY(Timestamp[i], FilteredValue[i]);
+                    chartTempReal.Titles.Clear();
+                    chartTempReal.Series.Clear();
+                    Series series = new Series();
+                    series.ChartType = SeriesChartType.Line;
+                    //series.XValueType = ChartValueType.DateTime;
+
+                    for (int i = 0; i < FilteredValue.Count; i++)
+                    {
+                        series.Points.AddXY(i, FilteredValue[i]); //Timestamp[i]
+                    }
+
+
+                    chartTempReal.Titles.Add("Sensor readings");
+                    chartTempReal.ChartAreas[0].AxisX.Title = "Time";
+                    chartTempReal.ChartAreas[0].AxisY.Title = "Temperature °C";
+                    chartTempReal.Series.Add(series);
+                    chartTempReal.Refresh();
                 }
 
-                chartTempReal.Titles.Add("Sensor readings");
-                chartTempReal.ChartAreas[0].AxisX.Title = "Time";
-                chartTempReal.ChartAreas[0].AxisY.Title = "Temperature °C";
-                chartTempReal.Series.Add(series);
-                chartTempReal.Refresh();
+                if (Simulating)
+                {
+                    chartTempSim.Titles.Clear();
+                    chartTempSim.Series.Clear();
+                    Series series = new Series();
+                    series.ChartType = SeriesChartType.Line;
+                    //series.XValueType = ChartValueType.DateTime;
+
+                    for (int i = 0; i < FilteredSim.Count; i++)
+                    {
+                        series.Points.AddXY(i, FilteredSim[i]); //TimestampSim[i]
+                    }
+
+                    chartTempSim.Titles.Add("Sensor readings");
+                    chartTempSim.ChartAreas[0].AxisX.Title = "Time";
+                    chartTempSim.ChartAreas[0].AxisY.Title = "Temperature °C";
+                    chartTempSim.Series.Add(series);
+                    chartTempSim.Refresh();
+                }
+
 
             }
             catch (Exception)
@@ -153,61 +183,85 @@ namespace PCS
             }
         }
 
-        private void simulate(int id)
+        private void UpdatePidParameters()
         {
-            switch (id)
+            double kp, ti, td, windup;
+            try
             {
-                case 1: //pwm 50% 2sec
-                    while (Simulating)
-                    {
-                        if (Heat == 0)
-                        {
-                            Heat = 5;
-                        }
-                        else
-                        {
-                            Heat = 0;
-                        }
-                        Thread.Sleep(2000);
-                    }
-                    break;
-                case 2:
-                    Random rnd = new Random();
-                    double heatChange;
-                    Heat = 2.5;
-                    while (Simulating)
-                    {
-                        heatChange = (rnd.NextDouble() * 2) - 1;
-                        Heat += heatChange;
-                        Heat = Math.Min(Heat, 5);
-                        Heat = Math.Max(Heat, 0);
-                        Thread.Sleep(500);
-                    }
-                    break;
-                default:
-                    break;
+                kp = Convert.ToDouble(txtP.Text);
+                ti = Convert.ToDouble(txtI.Text);
+                td = Convert.ToDouble(txtD.Text);
+                windup = Convert.ToDouble(txtAntiWindup.Text);
+                PidController.Kp = kp;
+                if (ti <= 0)
+                {
+                    ti = double.MaxValue;
+                }
+                PidController.Ti = ti;
+                PidController.Td = td;
+                PidController.antiWindup = windup;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("PID parameters must be of type double");
             }
         }
 
+
         private void tmr1_Tick(object sender, EventArgs e)
         {
-            double signal, temp, filtered;
+            double signal, temp = 0, filtered, tempSim = 0, filteredSim = 0, fanMan, heatMan;
             double fan = 0;
             string channel, device;
+            double[] inputs = new double[2];
             DateTime datetime = DateTime.Now;
 
 
             ///
-            if (Simulating == false)
+            if (Simulating)
             {
-                if (double.TryParse(txtHeat.Text, out double val))
+                if (Manual)
                 {
-                    Heat = val;
+                    if (double.TryParse(txtHeat.Text, out double heatD))
+                    {
+                        heatMan = heatD;
+                    }
+                    else { heatMan = 0; }
+
+                    if (double.TryParse(txtFan.Text, out double fanD))
+                    {
+                        fanMan = fanD;
+                    }
+                    else { fanMan = 0; }
+
+                    inputs[0] = heatMan;
+                    inputs[1] = fanMan;
                 }
                 else
                 {
-                    Heat = 0;
+                    // PID run for simulation
+                    double previousTemp;
+                    try
+                    {
+                        previousTemp = FilteredSim[FilteredSim.Count - 1];
+                    }
+                    catch (Exception)
+                    {
+                        previousTemp = 2;
+                    }
+
+                    inputs[0] = Math.Max(Math.Min(PidController.NextU(previousTemp, Setpoint, 1), 5), 0);
+                    inputs[1] = 5;
                 }
+                txtInputSim.Text = inputs[0].ToString("0.##");
+                tempSim = Sim.UpdateSimulation(inputs, 1);
+                SimValue.Add(tempSim);
+                TimestampSim.Add(datetime);
+                filteredSim = MovingAverage(SimValue);
+                FilteredSim.Add(filteredSim);
+
+                txtTempSim.Text = filteredSim.ToString("0.##");
+
             }
 
             ///
@@ -221,32 +275,27 @@ namespace PCS
                 signal = ReadDAQ(device, channel);
                 temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
                 WriteDAQ("dev3", "ao0", Heat);
+
+                SensorValue.Add(temp);
+                Timestamp.Add(datetime);
+                filtered = MovingAverage(SensorValue);
+                FilteredValue.Add(filtered);
+
+                opcHandler.UpdateNodeValue("Temperature", filtered);
+                opcHandler.UpdateNodeValue("Fan", fan);
+                opcHandler.UpdateNodeValue("Heat", Heat);
+
+                txtTempReal.Text = filtered.ToString("0.##");
+                txtInputReal.Text = Heat.ToString("0.##");
             }
             else
             {
-                double[] inputs = { Heat, 5 };
-                temp = Sim.UpdateSimulation(inputs, 1);
-                //if (double.TryParse(txtTempReal.Text, out double value))
-                //{
-                //    temp = value;
-                //}
-                //else
-                //{
-                //    temp = 0;
-                //}
+                opcHandler.UpdateNodeValue("Temperature", filteredSim);
+                opcHandler.UpdateNodeValue("Fan", inputs[1]);
+                opcHandler.UpdateNodeValue("Heat", inputs[0]);
+
             }
 
-
-            SensorValue.Add(temp);
-            Timestamp.Add(datetime);
-            filtered = MovingAverage(SensorValue);
-            FilteredValue.Add(filtered);
-
-            opcHandler.UpdateNodeValue("Temperature", filtered);
-            opcHandler.UpdateNodeValue("Fan", fan);
-            opcHandler.UpdateNodeValue("Heat", Heat);
-
-            txtTempReal.Text = filtered.ToString();
             InsertIntoChart();
 
         }
@@ -274,35 +323,81 @@ namespace PCS
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            UpdatePidParameters();
+
             if (Running)
             {
                 tmr1.Stop();
+                btnStart.Text = "Start";
+                Running = false;
             }
             else
             {
                 tmr1.Start();
+                btnStart.Text = "Stop";
+                Running = true;
             }
         }
 
         private void btnSim_Click(object sender, EventArgs e)
         {
-            //Simulation id
-            //int id = 2;
-            //if (Simulating)
-            //{
-            //    Simulating = false;
-            //}
-            //else
-            //{
-            //    Simulating = true;
-            //    Thread sim = new Thread(() => simulate(id));
-            //    sim.Start();
-            //}
-            double heat = Convert.ToDouble(txtHeat.Text);
-            double[] inputs = { 0, 1 };
-            double output;
-            output = Sim.UpdateSimulation(inputs, 1);
-            MessageBox.Show(output.ToString());
+            // Turn simulation on or off
+            if (Simulating)
+            {
+                Simulating = false;
+                btnSim.Text = "Off";
+            }
+            else
+            {
+                Simulating = true;
+                btnSim.Text = "On";
+            }
+        }
+
+        private void btnSimMode_Click(object sender, EventArgs e)
+        {
+            if (Manual)
+            {
+                Manual = false;
+                btnSimMode.Text = "PID";
+            }
+            else
+            {
+                Manual = true;
+                btnSimMode.Text = "Manual";
+            }
+        }
+
+        private void txtP_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePidParameters();
+        }
+
+        private void txtI_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePidParameters();
+        }
+
+        private void txtD_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePidParameters();
+        }
+
+        private void txtAntiWindup_TextChanged(object sender, EventArgs e)
+        {
+            UpdatePidParameters();
+        }
+
+        private void txtSetpoint_TextChanged(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtSetpoint.Text, out double setpoint))
+            {
+                Setpoint = setpoint;
+            }
+            else
+            {
+                setpoint = 0;
+            }
         }
     }
 }

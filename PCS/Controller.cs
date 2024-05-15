@@ -17,12 +17,16 @@ namespace PCS
     {
         /*
          Notes
-        Ultimate gain simulation = 4,95
-        Tu = 18
+        Ultimate gain simulation = 3,5
+        Tu = 11
         PID: 
-        Kp = 0.6*Ku = 2,97
-        Ti = 0.5*Tu = 9
-        Td = 0.125*Tu = 2,25
+        Kp = 0.6*Ku = 2,1
+        Ti = 0.5*Tu = 5,5
+        Td = 0.125*Tu = 1,375
+
+        PI:
+        Kp = 0,45*Ku = 1,58
+        Ti = Tu/1.2 = 9,17
 
 
          */
@@ -42,6 +46,7 @@ namespace PCS
         private bool Running = false;
         private bool Simulating = false;
         private bool Manual = false;
+        private bool TempLimChart = false;
         public Controller()
         {
             InitializeComponent();
@@ -132,7 +137,7 @@ namespace PCS
 
         private void InsertIntoChart()
         {
-            // Method for inserting sensor values into chart
+            // Method for inserting sensor values into chart (should be combined sim and real)
             try
             {
                 if (Connected)
@@ -148,8 +153,19 @@ namespace PCS
                         series.Points.AddXY(i, FilteredValue[i]); //Timestamp[i]
                     }
 
+                    if (TempLimChart)
+                    {
+                        if (double.TryParse(txtChartYmin.Text, out double minChart))
+                        {
+                            chartTempReal.ChartAreas[0].AxisY.Minimum = minChart;
+                        }
+                        if (double.TryParse(txtChartYmax.Text, out double maxChart))
+                        {
+                            chartTempReal.ChartAreas[0].AxisY.Maximum = maxChart;
+                        }
+                    }
 
-                    chartTempReal.Titles.Add("Sensor readings");
+                    chartTempReal.Titles.Add("Sensor");
                     chartTempReal.ChartAreas[0].AxisX.Title = "Time";
                     chartTempReal.ChartAreas[0].AxisY.Title = "Temperature °C";
                     chartTempReal.Series.Add(series);
@@ -169,7 +185,19 @@ namespace PCS
                         series.Points.AddXY(i, FilteredSim[i]); //TimestampSim[i]
                     }
 
-                    chartTempSim.Titles.Add("Sensor readings");
+                    if (TempLimChart)
+                    {
+                        if (double.TryParse(txtChartYminSim.Text, out double minChart))
+                        {
+                            chartTempSim.ChartAreas[0].AxisY.Minimum = minChart;
+                        }
+                        if (double.TryParse(txtChartYmaxSim.Text, out double maxChart))
+                        {
+                            chartTempSim.ChartAreas[0].AxisY.Maximum = maxChart;
+                        }
+                    }
+
+                    chartTempSim.Titles.Add("Simulation");
                     chartTempSim.ChartAreas[0].AxisX.Title = "Time";
                     chartTempSim.ChartAreas[0].AxisY.Title = "Temperature °C";
                     chartTempSim.Series.Add(series);
@@ -241,7 +269,7 @@ namespace PCS
                     {
                         fanMan = fanD;
                     }
-                    else { fanMan = 0; }
+                    else { fanMan = 5; }
 
                     inputs[0] = heatMan;
                     inputs[1] = fanMan;
@@ -259,11 +287,11 @@ namespace PCS
                         previousTemp = 2;
                     }
 
-                    inputs[0] = Math.Max(Math.Min(PidControllerSim.NextU(previousTemp, Setpoint, 1), 5), 0);
+                    inputs[0] = Math.Max(Math.Min(PidControllerSim.NextU(previousTemp, Setpoint, 0.1), 5), 0);
                     inputs[1] = 5;
                 }
                 txtInputSim.Text = inputs[0].ToString("0.##");
-                tempSim = Sim.UpdateSimulation(inputs, 1);
+                tempSim = Sim.UpdateSimulation(inputs, 0.1);
                 SimValue.Add(tempSim);
                 TimestampSim.Add(datetime);
                 filteredSim = MovingAverage(SimValue);
@@ -273,7 +301,7 @@ namespace PCS
 
             }
 
-            ///
+            
 
             //get temperature from sensor or manually written in txtTemp
             if (Connected)
@@ -284,7 +312,14 @@ namespace PCS
                 signal = ReadDAQ(device, channel);
                 temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
 
-                Heat = Math.Max(Math.Min(PidControllerReal.NextU(temp, Setpoint, 1), 5), 0);
+                if (Manual)
+                {
+                    double.TryParse(txtHeat.Text, out Heat);
+                }
+                else
+                {
+                    Heat = Math.Max(Math.Min(PidControllerReal.NextU(temp, Setpoint, 0.1), 5), 0);
+                }
 
                 WriteDAQ("dev3", "ao0", Heat);
 
@@ -305,7 +340,6 @@ namespace PCS
                 opcHandler.UpdateNodeValue("Temperature", filteredSim);
                 opcHandler.UpdateNodeValue("Fan", inputs[1]);
                 opcHandler.UpdateNodeValue("Heat", inputs[0]);
-
             }
 
             InsertIntoChart();
@@ -405,6 +439,20 @@ namespace PCS
             if (double.TryParse(txtSetpoint.Text, out double setpoint))
             {
                 Setpoint = setpoint;
+            }
+        }
+
+        private void btnLimitTemp_Click(object sender, EventArgs e)
+        {
+            if (TempLimChart)
+            {
+                TempLimChart = false;
+                btnLimitTemp.Text = "Off";
+            }
+            else
+            {
+                TempLimChart = true;
+                btnLimitTemp.Text = "On";
             }
         }
     }

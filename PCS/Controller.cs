@@ -34,7 +34,8 @@ namespace PCS
         private List<DateTime> TimestampSim = new List<DateTime>();
         private double Heat = 0;
         private double Setpoint = 0;
-        PID PidController = new PID();
+        PID PidControllerSim = new PID();
+        PID PidControllerReal = new PID();
         OpcHandler opcHandler = new OpcHandler();
         Simulation Sim;
         private bool Connected = false;
@@ -192,14 +193,22 @@ namespace PCS
                 ti = Convert.ToDouble(txtI.Text);
                 td = Convert.ToDouble(txtD.Text);
                 windup = Convert.ToDouble(txtAntiWindup.Text);
-                PidController.Kp = kp;
+
+                PidControllerSim.Kp = kp;
+
+                PidControllerReal.Kp = kp;
+
                 if (ti <= 0)
                 {
                     ti = double.MaxValue;
                 }
-                PidController.Ti = ti;
-                PidController.Td = td;
-                PidController.antiWindup = windup;
+                PidControllerSim.Ti = ti;
+                PidControllerSim.Td = td;
+                PidControllerSim.antiWindup = windup;
+
+                PidControllerReal.Ti = ti;
+                PidControllerReal.Td = td;
+                PidControllerReal.antiWindup = windup;
             }
             catch (Exception)
             {
@@ -250,7 +259,7 @@ namespace PCS
                         previousTemp = 2;
                     }
 
-                    inputs[0] = Math.Max(Math.Min(PidController.NextU(previousTemp, Setpoint, 1), 5), 0);
+                    inputs[0] = Math.Max(Math.Min(PidControllerSim.NextU(previousTemp, Setpoint, 1), 5), 0);
                     inputs[1] = 5;
                 }
                 txtInputSim.Text = inputs[0].ToString("0.##");
@@ -274,6 +283,9 @@ namespace PCS
                 fan = ReadDAQ(device, "ai1");
                 signal = ReadDAQ(device, channel);
                 temp = ConvertAnalogSignal(signal, 1, 5, 0, 50);
+
+                Heat = Math.Max(Math.Min(PidControllerReal.NextU(temp, Setpoint, 1), 5), 0);
+
                 WriteDAQ("dev3", "ao0", Heat);
 
                 SensorValue.Add(temp);
@@ -393,10 +405,6 @@ namespace PCS
             if (double.TryParse(txtSetpoint.Text, out double setpoint))
             {
                 Setpoint = setpoint;
-            }
-            else
-            {
-                setpoint = 0;
             }
         }
     }

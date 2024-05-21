@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.txtTempReal = new System.Windows.Forms.TextBox();
             this.tmr1 = new System.Windows.Forms.Timer(this.components);
             this.txtHeat = new System.Windows.Forms.TextBox();
@@ -95,6 +95,31 @@
             this.lblUnitRealV = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtInputReal = new System.Windows.Forms.TextBox();
+            this.tabLimits = new System.Windows.Forms.TabPage();
+            this.txtLimTempHigh = new System.Windows.Forms.TextBox();
+            this.lblLimTempHigh = new System.Windows.Forms.Label();
+            this.txtLimTempLow = new System.Windows.Forms.TextBox();
+            this.lblLimTempLow = new System.Windows.Forms.Label();
+            this.txtLimFanHigh = new System.Windows.Forms.TextBox();
+            this.lblLimFanHigh = new System.Windows.Forms.Label();
+            this.txtLimFanLow = new System.Windows.Forms.TextBox();
+            this.lblLimFanLow = new System.Windows.Forms.Label();
+            this.txtLimDeviationSet = new System.Windows.Forms.TextBox();
+            this.lblDeviationSet = new System.Windows.Forms.Label();
+            this.txtLimDeviationTime = new System.Windows.Forms.TextBox();
+            this.lblDeviationTime = new System.Windows.Forms.Label();
+            this.txtLimHeatLow = new System.Windows.Forms.TextBox();
+            this.lblLimHeatLow = new System.Windows.Forms.Label();
+            this.txtLimHeatHigh = new System.Windows.Forms.TextBox();
+            this.lblLimHeatHigh = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.TabControl.SuspendLayout();
             this.tabPageDevice.SuspendLayout();
             this.tabPageControl.SuspendLayout();
@@ -102,6 +127,7 @@
             this.tabChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartTempReal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTempSim)).BeginInit();
+            this.tabLimits.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtTempReal
@@ -131,6 +157,7 @@
             this.TabControl.Controls.Add(this.tabPageControl);
             this.TabControl.Controls.Add(this.tabPID);
             this.TabControl.Controls.Add(this.tabChart);
+            this.TabControl.Controls.Add(this.tabLimits);
             this.TabControl.Location = new System.Drawing.Point(73, 68);
             this.TabControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TabControl.Name = "TabControl";
@@ -629,28 +656,28 @@
             // 
             // chartTempReal
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartTempReal.ChartAreas.Add(chartArea1);
+            chartArea3.Name = "ChartArea1";
+            this.chartTempReal.ChartAreas.Add(chartArea3);
             this.chartTempReal.Location = new System.Drawing.Point(768, 48);
             this.chartTempReal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartTempReal.Name = "chartTempReal";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartTempReal.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Name = "Series1";
+            this.chartTempReal.Series.Add(series3);
             this.chartTempReal.Size = new System.Drawing.Size(893, 366);
             this.chartTempReal.TabIndex = 23;
             this.chartTempReal.Text = "chart1";
             // 
             // chartTempSim
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartTempSim.ChartAreas.Add(chartArea2);
+            chartArea4.Name = "ChartArea1";
+            this.chartTempSim.ChartAreas.Add(chartArea4);
             this.chartTempSim.Location = new System.Drawing.Point(768, 446);
             this.chartTempSim.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartTempSim.Name = "chartTempSim";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.chartTempSim.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "Series1";
+            this.chartTempSim.Series.Add(series4);
             this.chartTempSim.Size = new System.Drawing.Size(893, 366);
             this.chartTempSim.TabIndex = 24;
             this.chartTempSim.Text = "chart1";
@@ -733,6 +760,256 @@
             this.txtInputReal.Size = new System.Drawing.Size(48, 22);
             this.txtInputReal.TabIndex = 31;
             // 
+            // tabLimits
+            // 
+            this.tabLimits.Controls.Add(this.label11);
+            this.tabLimits.Controls.Add(this.label10);
+            this.tabLimits.Controls.Add(this.label9);
+            this.tabLimits.Controls.Add(this.label8);
+            this.tabLimits.Controls.Add(this.label7);
+            this.tabLimits.Controls.Add(this.label6);
+            this.tabLimits.Controls.Add(this.label4);
+            this.tabLimits.Controls.Add(this.label2);
+            this.tabLimits.Controls.Add(this.txtLimHeatLow);
+            this.tabLimits.Controls.Add(this.lblLimHeatLow);
+            this.tabLimits.Controls.Add(this.txtLimHeatHigh);
+            this.tabLimits.Controls.Add(this.lblLimHeatHigh);
+            this.tabLimits.Controls.Add(this.txtLimDeviationTime);
+            this.tabLimits.Controls.Add(this.lblDeviationTime);
+            this.tabLimits.Controls.Add(this.txtLimDeviationSet);
+            this.tabLimits.Controls.Add(this.lblDeviationSet);
+            this.tabLimits.Controls.Add(this.txtLimFanLow);
+            this.tabLimits.Controls.Add(this.lblLimFanLow);
+            this.tabLimits.Controls.Add(this.txtLimFanHigh);
+            this.tabLimits.Controls.Add(this.lblLimFanHigh);
+            this.tabLimits.Controls.Add(this.txtLimTempLow);
+            this.tabLimits.Controls.Add(this.lblLimTempLow);
+            this.tabLimits.Controls.Add(this.txtLimTempHigh);
+            this.tabLimits.Controls.Add(this.lblLimTempHigh);
+            this.tabLimits.Location = new System.Drawing.Point(4, 25);
+            this.tabLimits.Name = "tabLimits";
+            this.tabLimits.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLimits.Size = new System.Drawing.Size(360, 431);
+            this.tabLimits.TabIndex = 4;
+            this.tabLimits.Text = "Limits";
+            this.tabLimits.UseVisualStyleBackColor = true;
+            // 
+            // txtLimTempHigh
+            // 
+            this.txtLimTempHigh.Location = new System.Drawing.Point(246, 32);
+            this.txtLimTempHigh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimTempHigh.Name = "txtLimTempHigh";
+            this.txtLimTempHigh.Size = new System.Drawing.Size(67, 22);
+            this.txtLimTempHigh.TabIndex = 34;
+            this.txtLimTempHigh.Text = "35";
+            // 
+            // lblLimTempHigh
+            // 
+            this.lblLimTempHigh.AutoSize = true;
+            this.lblLimTempHigh.Location = new System.Drawing.Point(31, 35);
+            this.lblLimTempHigh.Name = "lblLimTempHigh";
+            this.lblLimTempHigh.Size = new System.Drawing.Size(145, 20);
+            this.lblLimTempHigh.TabIndex = 35;
+            this.lblLimTempHigh.Text = "High temperature: ";
+            // 
+            // txtLimTempLow
+            // 
+            this.txtLimTempLow.Location = new System.Drawing.Point(246, 64);
+            this.txtLimTempLow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimTempLow.Name = "txtLimTempLow";
+            this.txtLimTempLow.Size = new System.Drawing.Size(67, 22);
+            this.txtLimTempLow.TabIndex = 36;
+            this.txtLimTempLow.Text = "20";
+            // 
+            // lblLimTempLow
+            // 
+            this.lblLimTempLow.AutoSize = true;
+            this.lblLimTempLow.Location = new System.Drawing.Point(31, 67);
+            this.lblLimTempLow.Name = "lblLimTempLow";
+            this.lblLimTempLow.Size = new System.Drawing.Size(140, 20);
+            this.lblLimTempLow.TabIndex = 37;
+            this.lblLimTempLow.Text = "Low temperature: ";
+            // 
+            // txtLimFanHigh
+            // 
+            this.txtLimFanHigh.Location = new System.Drawing.Point(246, 120);
+            this.txtLimFanHigh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimFanHigh.Name = "txtLimFanHigh";
+            this.txtLimFanHigh.Size = new System.Drawing.Size(67, 22);
+            this.txtLimFanHigh.TabIndex = 38;
+            this.txtLimFanHigh.Text = "4,9";
+            // 
+            // lblLimFanHigh
+            // 
+            this.lblLimFanHigh.AutoSize = true;
+            this.lblLimFanHigh.Location = new System.Drawing.Point(31, 123);
+            this.lblLimFanHigh.Name = "lblLimFanHigh";
+            this.lblLimFanHigh.Size = new System.Drawing.Size(130, 20);
+            this.lblLimFanHigh.TabIndex = 39;
+            this.lblLimFanHigh.Text = "High fan speed: ";
+            // 
+            // txtLimFanLow
+            // 
+            this.txtLimFanLow.Location = new System.Drawing.Point(246, 154);
+            this.txtLimFanLow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimFanLow.Name = "txtLimFanLow";
+            this.txtLimFanLow.Size = new System.Drawing.Size(67, 22);
+            this.txtLimFanLow.TabIndex = 40;
+            this.txtLimFanLow.Text = "2,4";
+            // 
+            // lblLimFanLow
+            // 
+            this.lblLimFanLow.AutoSize = true;
+            this.lblLimFanLow.Location = new System.Drawing.Point(31, 157);
+            this.lblLimFanLow.Name = "lblLimFanLow";
+            this.lblLimFanLow.Size = new System.Drawing.Size(121, 20);
+            this.lblLimFanLow.TabIndex = 41;
+            this.lblLimFanLow.Text = "Low fan speed:";
+            // 
+            // txtLimDeviationSet
+            // 
+            this.txtLimDeviationSet.Location = new System.Drawing.Point(246, 302);
+            this.txtLimDeviationSet.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimDeviationSet.Name = "txtLimDeviationSet";
+            this.txtLimDeviationSet.Size = new System.Drawing.Size(67, 22);
+            this.txtLimDeviationSet.TabIndex = 42;
+            this.txtLimDeviationSet.Text = "10";
+            // 
+            // lblDeviationSet
+            // 
+            this.lblDeviationSet.AutoSize = true;
+            this.lblDeviationSet.Location = new System.Drawing.Point(31, 305);
+            this.lblDeviationSet.Name = "lblDeviationSet";
+            this.lblDeviationSet.Size = new System.Drawing.Size(149, 16);
+            this.lblDeviationSet.TabIndex = 43;
+            this.lblDeviationSet.Text = "Deviation from setpoint: ";
+            // 
+            // txtLimDeviationTime
+            // 
+            this.txtLimDeviationTime.Location = new System.Drawing.Point(246, 336);
+            this.txtLimDeviationTime.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimDeviationTime.Name = "txtLimDeviationTime";
+            this.txtLimDeviationTime.Size = new System.Drawing.Size(67, 22);
+            this.txtLimDeviationTime.TabIndex = 44;
+            this.txtLimDeviationTime.Text = "15";
+            // 
+            // lblDeviationTime
+            // 
+            this.lblDeviationTime.AutoSize = true;
+            this.lblDeviationTime.Location = new System.Drawing.Point(31, 339);
+            this.lblDeviationTime.Name = "lblDeviationTime";
+            this.lblDeviationTime.Size = new System.Drawing.Size(98, 16);
+            this.lblDeviationTime.TabIndex = 45;
+            this.lblDeviationTime.Text = "Deviation time: ";
+            // 
+            // txtLimHeatLow
+            // 
+            this.txtLimHeatLow.Location = new System.Drawing.Point(246, 240);
+            this.txtLimHeatLow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimHeatLow.Name = "txtLimHeatLow";
+            this.txtLimHeatLow.Size = new System.Drawing.Size(67, 22);
+            this.txtLimHeatLow.TabIndex = 48;
+            this.txtLimHeatLow.Text = "0,1";
+            // 
+            // lblLimHeatLow
+            // 
+            this.lblLimHeatLow.AutoSize = true;
+            this.lblLimHeatLow.Location = new System.Drawing.Point(31, 243);
+            this.lblLimHeatLow.Name = "lblLimHeatLow";
+            this.lblLimHeatLow.Size = new System.Drawing.Size(79, 20);
+            this.lblLimHeatLow.TabIndex = 49;
+            this.lblLimHeatLow.Text = "Low heat:";
+            // 
+            // txtLimHeatHigh
+            // 
+            this.txtLimHeatHigh.Location = new System.Drawing.Point(246, 206);
+            this.txtLimHeatHigh.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLimHeatHigh.Name = "txtLimHeatHigh";
+            this.txtLimHeatHigh.Size = new System.Drawing.Size(67, 22);
+            this.txtLimHeatHigh.TabIndex = 46;
+            this.txtLimHeatHigh.Text = "4,9";
+            // 
+            // lblLimHeatHigh
+            // 
+            this.lblLimHeatHigh.AutoSize = true;
+            this.lblLimHeatHigh.Location = new System.Drawing.Point(31, 209);
+            this.lblLimHeatHigh.Name = "lblLimHeatHigh";
+            this.lblLimHeatHigh.Size = new System.Drawing.Size(88, 20);
+            this.lblLimHeatHigh.TabIndex = 47;
+            this.lblLimHeatHigh.Text = "High heat: ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(319, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 16);
+            this.label2.TabIndex = 34;
+            this.label2.Text = "°C";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(319, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(20, 16);
+            this.label4.TabIndex = 50;
+            this.label4.Text = "°C";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(319, 123);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(20, 20);
+            this.label6.TabIndex = 51;
+            this.label6.Text = "V";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(319, 157);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(20, 20);
+            this.label7.TabIndex = 52;
+            this.label7.Text = "V";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(319, 209);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(20, 20);
+            this.label8.TabIndex = 53;
+            this.label8.Text = "V";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(319, 243);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(20, 20);
+            this.label9.TabIndex = 54;
+            this.label9.Text = "V";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(319, 305);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 16);
+            this.label10.TabIndex = 55;
+            this.label10.Text = "°C";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(319, 339);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(18, 20);
+            this.label11.TabIndex = 56;
+            this.label11.Text = "s";
+            // 
             // Controller
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -768,6 +1045,8 @@
             this.tabChart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartTempReal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartTempSim)).EndInit();
+            this.tabLimits.ResumeLayout(false);
+            this.tabLimits.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -837,6 +1116,31 @@
         private System.Windows.Forms.TextBox txtChartYmaxSim;
         private System.Windows.Forms.Label lblMinChartYsim;
         private System.Windows.Forms.TextBox txtChartYminSim;
+        private System.Windows.Forms.TabPage tabLimits;
+        private System.Windows.Forms.TextBox txtLimDeviationTime;
+        private System.Windows.Forms.Label lblDeviationTime;
+        private System.Windows.Forms.TextBox txtLimDeviationSet;
+        private System.Windows.Forms.Label lblDeviationSet;
+        private System.Windows.Forms.TextBox txtLimFanLow;
+        private System.Windows.Forms.Label lblLimFanLow;
+        private System.Windows.Forms.TextBox txtLimFanHigh;
+        private System.Windows.Forms.Label lblLimFanHigh;
+        private System.Windows.Forms.TextBox txtLimTempLow;
+        private System.Windows.Forms.Label lblLimTempLow;
+        private System.Windows.Forms.TextBox txtLimTempHigh;
+        private System.Windows.Forms.Label lblLimTempHigh;
+        private System.Windows.Forms.TextBox txtLimHeatLow;
+        private System.Windows.Forms.Label lblLimHeatLow;
+        private System.Windows.Forms.TextBox txtLimHeatHigh;
+        private System.Windows.Forms.Label lblLimHeatHigh;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
     }
 }
 

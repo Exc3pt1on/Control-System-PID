@@ -10,6 +10,7 @@ using System.Threading;
 using Opc.UaFx.Client;
 using Opc.Ua;
 using System.Drawing;
+using System.Linq.Expressions;
 
 namespace PCS
 {
@@ -38,6 +39,7 @@ namespace PCS
         private List<DateTime> TimestampSim = new List<DateTime>();
         private double Heat = 0;
         private double Setpoint = 0;
+        private int countRegulator = 9;
         PID PidControllerSim = new PID();
         PID PidControllerReal = new PID();
         OpcHandler opcHandler = new OpcHandler();
@@ -53,13 +55,19 @@ namespace PCS
             opcHandler.AddNode("Temperature");
             opcHandler.AddNode("Heat");
             opcHandler.AddNode("Fan");
+            opcHandler.AddNode("HighLimitTemp");
+            opcHandler.AddNode("LowLimitTemp");
+            opcHandler.AddNode("HighLimitFan");
+            opcHandler.AddNode("LowLimitFan");
+            opcHandler.AddNode("HighLimitHeat");
+            opcHandler.AddNode("LowLimitHeat");
             Thread serverThread = new Thread(opcHandler.StartOpcUaServer);
             serverThread.Start();
 
             double a = 0.9488;
-            double[] b = { 0.24, -0.0433 };
+            double[] b = { 0.34, -0.0433 };//0.24, -0.0433
             double c = 0.4894;
-            double initialState = 52.9864;
+            double initialState = 1;//52.9864
 
             Setpoint = Convert.ToDouble(txtSetpoint.Text);
             Sim = new Simulation(a, b, c, initialState);
@@ -286,8 +294,17 @@ namespace PCS
                     {
                         previousTemp = 2;
                     }
+                    if (countRegulator >= 9)
+                    {
+                        inputs[0] = Math.Max(Math.Min(PidControllerSim.NextU(previousTemp, Setpoint, 1), 5), 0);
+                        countRegulator = 0;
+                    }
+                    else
+                    {
+                        inputs[0] = Math.Max(Math.Min(PidControllerSim.U, 5), 0);
+                        countRegulator++;
+                    }
 
-                    inputs[0] = Math.Max(Math.Min(PidControllerSim.NextU(previousTemp, Setpoint, 0.1), 5), 0);
                     inputs[1] = 5;
                 }
                 txtInputSim.Text = inputs[0].ToString("0.##");
@@ -301,7 +318,7 @@ namespace PCS
 
             }
 
-            
+
 
             //get temperature from sensor or manually written in txtTemp
             if (Connected)
@@ -341,6 +358,21 @@ namespace PCS
                 opcHandler.UpdateNodeValue("Fan", inputs[1]);
                 opcHandler.UpdateNodeValue("Heat", inputs[0]);
             }
+            try
+            {
+                opcHandler.UpdateNodeValue("HighLimitTemp", Convert.ToDouble(txtLimTempHigh.Text));
+                opcHandler.UpdateNodeValue("LowLimitTemp", Convert.ToDouble(txtLimTempLow.Text));
+                opcHandler.UpdateNodeValue("HighLimitFan", Convert.ToDouble(txtLimFanHigh.Text));
+                opcHandler.UpdateNodeValue("LowLimitFan", Convert.ToDouble(txtLimFanLow.Text));
+                opcHandler.UpdateNodeValue("HighLimitHeat", Convert.ToDouble(txtLimHeatHigh.Text));
+                opcHandler.UpdateNodeValue("LowLimitHeat", Convert.ToDouble(txtLimHeatLow.Text));
+            }
+
+            catch (Exception)
+            {
+                throw;
+            }
+            
 
             InsertIntoChart();
 

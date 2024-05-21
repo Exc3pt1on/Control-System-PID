@@ -174,8 +174,8 @@ namespace PCS
                     }
 
                     chartTempReal.Titles.Add("Sensor");
-                    chartTempReal.ChartAreas[0].AxisX.Title = "Time";
-                    chartTempReal.ChartAreas[0].AxisY.Title = "Temperature °C";
+                    chartTempReal.ChartAreas[0].AxisX.Title = "Time [ms]";
+                    chartTempReal.ChartAreas[0].AxisY.Title = "Temperature [°C}";
                     chartTempReal.Series.Add(series);
                     chartTempReal.Refresh();
                 }
@@ -206,7 +206,7 @@ namespace PCS
                     }
 
                     chartTempSim.Titles.Add("Simulation");
-                    chartTempSim.ChartAreas[0].AxisX.Title = "Time";
+                    chartTempSim.ChartAreas[0].AxisX.Title = "Time [ms]";
                     chartTempSim.ChartAreas[0].AxisY.Title = "Temperature °C";
                     chartTempSim.Series.Add(series);
                     chartTempSim.Refresh();

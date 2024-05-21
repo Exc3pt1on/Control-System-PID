@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\kimer\\OneDrive - USN\\Kim\\Master\\Semester 8\\Industrial IT\\Assignment SCADA\\Control-System-PID\\PCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|C:\\Users\\kimer\\OneDrive - USN\\Kim\\Master\\Semester 8\\Industrial IT\\Assignment SCADA\\Control-System-PID\\PCS\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|c:\\users\\kimer\\onedrive - usn\\kim\\master\\semester 8\\industrial it\\assignment scada\\control-system-pid\\pcs\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|solutionrelative:controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|c:\\users\\kimer\\onedrive - usn\\kim\\master\\semester 8\\industrial it\\assignment scada\\control-system-pid\\pcs\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|C:\\Users\\kimer\\OneDrive - USN\\Kim\\Master\\Semester 8\\Industrial IT\\Assignment SCADA\\Control-System-PID\\PCS\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|solutionrelative:controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -15,7 +15,7 @@
       "RelativeMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|solutionrelative:pid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|c:\\users\\kimer\\onedrive - usn\\kim\\master\\semester 8\\industrial it\\assignment scada\\control-system-pid\\pcs\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|C:\\Users\\kimer\\OneDrive - USN\\Kim\\Master\\Semester 8\\Industrial IT\\Assignment SCADA\\Control-System-PID\\PCS\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{09BE3F32-EB46-4ADA-89ED-1C1678DC3C1B}|PCS.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
@@ -55,8 +55,7 @@
               "RelativeToolTip": "Simulation.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAB4AAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-15T02:15:03.968Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-15T02:15:03.968Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "PID.cs",
               "ViewState": "AQIAAC4AAAAAAAAAAAAcwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-15T02:15:02.464Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-15T02:15:02.464Z"
             },
             {
               "$type": "Document",
@@ -79,7 +77,7 @@
               "RelativeDocumentMoniker": "Controller.cs",
               "ToolTip": "C:\\Users\\kimer\\OneDrive - USN\\Kim\\Master\\Semester 8\\Industrial IT\\Assignment SCADA\\Control-System-PID\\PCS\\Controller.cs",
               "RelativeToolTip": "Controller.cs",
-              "ViewState": "AQIAAFMBAAAAAAAAAAAAAG8BAABhAAAA",
+              "ViewState": "AQIAALUAAAAAAAAAAAAiwM4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-15T00:26:03.904Z",
               "EditorCaption": ""
